@@ -24,7 +24,7 @@ void save_string_file(const path& p, const std::string& str)
   ofstream file;
   file.exceptions(std::ofstream::failbit | std::ofstream::badbit);
   file.open(p, std::ios_base::binary);
-  file.write(str.c_str(), str.size());
+  file.write(str.c_str(), static_cast<std::streamsize>(str.size()));
 }
 
 inline
@@ -35,7 +35,7 @@ void load_string_file(const path& p, std::string& str)
   file.open(p, std::ios_base::binary);
   std::size_t sz = static_cast<std::size_t>(file_size(p));
   str.resize(sz, '\0');
-  file.read(&str[0], sz);
+  file.read(&str[0], static_cast<std::streamsize>(sz));
 }
 }  // namespace filesystem
 }  // namespace boost
